@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+    <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Шаблон с семантикой, сайдбаром и подсветкой кода</title>
+			<link rel="icon" href="img/anchor_32x32.png"> <!--Ubuntu_база_знаний-->
+            <link rel="stylesheet" href="css/01_main.css" media="all">
+			<link rel="stylesheet" href="css/tables.css" media="all">
+            <base target="_blank">
+
+            <style>
+.spec1 {width: 100%;height: 50vh;background-color: #F5F5F5;outline: 1px solid #D3D3D3;}
+.body1 {width: 70%;height: inherit; background-color: white;border: 2px solid red;margin: auto;}
+.nav {width: 98%; margin: 0 auto .2rem;height: 1.8rem;background-color: #357396;}
+.text {margin: 0 auto;text-align: center;color: #CC1818;font: 1.2rem Arial;height: 2rem;padding-top: .3rem;}
+.main {width: 100%;height: calc(100% - 7rem);outline: 1px dashed blue;outline-offset: -2px;}
+.main-inn {height: calc(100% - 3rem);width: calc(100% - 4px);margin: 0 auto;}
+.aside {width: 33%;height: 100%;float: left;background: linear-gradient(to bottom, rgba(220, 239, 236, 0.65) 0%, rgba(255, 255, 255, 0) 100%);margin-left: 1%;}
+.article {height: 100%;width: 65%;float: right;border: 1px solid #8118B2;}
+.footer {width: 100%;border: 1px solid  #871D08;height: 2.9rem;background-color: #C4C4C4;}
+.green {color: #6FBC4B;}
+.hljs {border: solid 1px rgba(61, 114, 112, 0.4);}
+.bord {margin: 1rem 0;border: 1px solid rgba(61, 114, 112, 0.4); padding: .5rem;}
+
+			</style>
+        </head>
+
+        <body id="az"> <!--ID для прокрутки страницы наверх-->
+        <nav>
+            <p><a href="#">Источник</a></p>
+            <p><a href="#">Оригинал</a></p>
+            <p>Автор</p>
+            <p>Перевод</p>
+            <p>Дата</p>
+        </nav>
+
+        <header>
+            <h1>Шаблон статических страниц 01_main.html</h1>
+        </header>
+
+        <main>
+            <aside>
+                <header>
+                    <h1>Содержание</h1>
+                </header>
+                <ul>
+        <li><a href="#a1" target="_self">Общие сведения о разметке</a></li>
+        <li><a href="#a2" target="_self">Структура шаблона</a></li>
+        <li><a href="#a3" target="_self">Использование шаблона. Вставка содержимого</a></li>
+        <li><a href="#a4" target="_self">Вставка изображений</a></li>
+        <li><a href="#a5" target="_self">Оформление заголовков</a></li>
+        <li><a href="#a6" target="_self">Подсветка кода. Выделения в тексте.</a>
+			<ul>
+				<li><a href="#a6-1" target="_self">Блоки "Примечание" и "Внимание"</a>
+			</ul></li>
+		<li><a href="#a7" target="_self">Нумерованные и маркированные списки</a></li>
+		<li><a href="#a8" target="_self">Таблицы</a>
+			<ul>
+				<li><a href="#a9" target="_self">Структура таблицы</a></li>
+				<li><a href="#a10" target="_self">Виды таблиц</a></li>
+			</ul></li>
+		<li><a href="#a11" target="_self">Вложенность в боковой панели "Содержание"</a>
+			<ul>
+				<li><a href="#a12" target="_self">Стандартный, или "классический" способ</a></li>
+				<li><a href="#a13" target="_self">"Сквозной" порядок нумерации</a></li>
+			</ul></li>
+		<li><a href="#a14" target="_self">Адаптивность</a></li>
+		<li><a href="#a15" target="_self">Дисклеймеры, замечания, TODO</a></li>
+                </ul>
+
+            </aside>
+            <article>
+
+
+                <section id="a1">
+	<!--================= ✂ =================-->
+                    <h2>Общие сведения о разметке</h2>
+
+		<p>Шаблон предназначен для статических веб-страниц (документации, скраббинга, изучения <code class="nohighlight">html</code> и <code class="nohighlight">css</code>, отработки навыков верстки, даже создания маленьких статических сайтов и т.д.)</p>
+		<p class="warn">Рекомендуется прочитать всё нижеследующее, прежде чем начинать работать с пустым шаблоном. А еще лучше держать данную страницу открытой в соседней вкладке браузера в качестве справки.</p>
+		<p>Шаблон сверстан с применением <a href="https://html5book.ru/css3-flexbox/">flexbox</a>, семантических тегов, подсветки кода скриптом <a href="https://highlightjs.org/">highlight.js</a> Ивана Сагалаева, а также разных рюшечек (какие понравились автору).</p>
+		<p>В верстке шапки (на flexbox) количество параграфов внутри панели <kbd>&lt;nav&gt;</kbd> можно менять произвольно, с учетом ширины <kbd>&lt;nav&gt;</kbd>. Пока параграфы помещаются в ширине <kbd>&lt;nav&gt;</kbd>, об их расположении и отступах можно не беспокоиться. То же самое касается и футера.</p>
+		<p>Сайдбар и статья (основное содержание страницы) размечены в процентах, так что при необходимости <strong>изменить общую ширину шаблона</strong> или <strong>соотношение сайдбара (<code class="nohighlight">aside</code>) и основного содержания (<code class="nohighlight">article</code>)</strong> это несложно сделать, оперируя стилями для  <code class="nohighlight">body</code>, <code class="nohighlight">aside</code> и <code class="nohighlight">article</code>.</p>
+		<p>Шаблон (и данная демо-страница) сверстаны с такими значениями ширины:</p>
+<pre><code>
+body {
+    width: 70%;
+    height: auto;
+    min-height: 100vh;
+	/* etc */
+}
+
+aside {
+	width: 33%;
+	height: auto;
+	position: sticky;
+	top: 0;
+	/* etc */
+}
+
+article {
+	width: 65%;
+	/* etc */
+}
+</code></pre>
+
+<p class="prim">Можно заметить, что суммарная ширина <code class="nohighlight">aside</code> и <code class="nohighlight">article</code> меньше 100%, &mdash; так надежнее.</p>
+<p><code class="nohighlight">main</code> служит лишь оберткой для <code class="nohighlight">aside</code> и <code class="nohighlight">article</code>, играя роль <code class="nohighlight">flexbox</code>-родителя.</p>
+	<!--================= ✂✂ =================-->
+                </section>
+
+                <section id="a2">
+	<!--================= ✂ =================-->
+					<h2>Структура шаблона</h2>
+
+<div class="doc1">
+    <div class="spec1">
+        <div class="body1">
+			<div class="text">body = 70% от html</div>
+			<div class="nav">
+				<div class="text" style="color: white;padding-top: .2rem;">nav</div>
+			</div>
+			<div class="main">
+				<div class="text" style="color: darkblue;">main = 100% от body</div>
+				<div class="main-inn">
+                    <div class="aside">
+						<div class="text" style="color: green;">aside = 33%</div>
+					</div>
+                    <div class="article">
+						<div class="text" style="color: #8118B2;">article = 65%</div>
+					</div>
+                </div>
+			</div>
+			<div class="footer">
+				<div class="text" style="color: #871D08;padding-top: .7rem;">footer</div>
+			</div>
+		</div>
+    </div>
+</div>
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a3">
+	<!--================= ✂ =================-->
+<h2>Использование шаблона. Вставка содержимого</h2>
+<p>Содержимое каждой "главы" (секции) вставляется между тегами <code class="nohighlight">&lt;section id=&quot;aN&quot;&gt;</code>...<code class="nohighlight">&lt;/section&gt;</code></p>
+<p>Для удобной ориентации в шаблоне между этими тегами есть закомментированные строки, вместо которых и нужно вставлять содержимое. <br>Вот как это выглядит:</p>
+<br>
+
+<pre class="hljs" style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(255, 255, 255); color: rgb(0, 0, 0);"><span class="xml">                <span class="hljs-tag" style="color: rgb(28, 0, 207);">&lt;<span class="hljs-name" style="color: rgb(0, 0, 136);">section</span> <span class="hljs-attr" style="color: rgb(92, 38, 153);">id</span>=<span class="hljs-string" style="color: rgb(196, 26, 22);">"a2"</span>&gt;</span>
+	<span class="hljs-comment" style="color: rgb(0, 106, 0);">&lt;!--================= ✂ =================--&gt;</span>				
+            <span class="hljs-comment" style="color: rgb(0, 106, 0);">&lt;!--Вставлять содержимое здесь--&gt;</span>
+	<span class="hljs-comment" style="color: rgb(0, 106, 0);">&lt;!--================= ✂✂ =================--&gt;</span>	
+		<span class="hljs-tag" style="color: rgb(28, 0, 207);">&lt;/<span class="hljs-name" style="color: rgb(0, 0, 136);">section</span>&gt;</span></span></pre>
+
+<p>Обычный текст оформляется как параграфы, его свойства можно переопределить как глобально, в шаблоне <code class="nohighlight">01_main_full.css</code>, так и локально, только для текущей страницы в секции</p>
+
+<pre><code>
+        &lt;head&gt;
+        ...............
+           &lt;style&gt;
+/*If need*/
+            &lt;/style&gt;
+        &lt;/head&gt;
+</code></pre>
+
+<p>Свойства задаются для селектора "<code class="nohighlight">article p</code>":</p>
+
+<pre><code>article p {
+    ..........
+}</code></pre>
+
+<p>Аналогично можно переопределить стили других элементов.</p>
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a4">
+    <!--================= ✂ =================-->
+<h2>Вставка изображений</h2>
+
+<p>Изображения лучше оформлять в контейнере <code class="nohighlight">figure</code>. Сниппет для редактора (в моем случае KomodoEdit, назначена комбинация Alt + Shift +F):</p>
+<pre><code class="hljs css">&lt;figure&gt;
+    &lt;img src=&quot;&quot;&gt;
+    &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+<p>Например:</p>
+
+<figure>
+    <img src="img/DEMO_01.png">
+    <figcaption>Кулер для процессора Thermalright True Spirit 120M (BW) Rev.A</figcaption>
+</figure>
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a5">
+	<!--================= ✂ =================-->
+<h2>Оформление заголовков</h2>
+<p>Заголовки для основного содержания (<code class="nohighlight">article</code>) имеются только трех уровней: <code class="nohighlight">article h2</code>, <code class="nohighlight">article h3</code> и <code class="nohighlight">article h4</code>. Другие (h1, h5 и h6) нужны очень редко и при необходимости могут быть оформлены встроенными стилями.</p>
+<p>Как заголовки выглядят:</p>
+
+					<h2>Заголовок второго уровня</h2>
+					<h3>Заголовок третьего уровня</h3>
+					<h4>Длинный заголовок четвертого уровня</h4>
+					<p>Текущее состояние внешнего вида заголовков (шрифты, отступы, выравнивание etc.) является скорее ориентиром для верстальщика, а не каким-то образцом. Работа над этим продолжается.</p>
+
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a6">
+	<!--================= ✂ =================-->
+<h2>Подсветка кода. Выделения в тексте.</h2>
+<h4>Подсветка кода</h4>
+<p>осуществляется широко известным скриптом Ивана Сагалаева <a href="https://highlightjs.org/">highlight.js</a>. Простейший способ его использовать описан <a href="https://highlightjs.org/usage/">здесь</a>. Вообще сопровождение у <code class="nohighlight">highlight.js</code> очень хорошее: много документации, CDN библиотеки и т.д.</p>
+<p>Пример для кода CSS:</p>
+
+<pre><code>article h2 {
+    margin: 2rem auto 1.5rem;
+    text-align: center;
+    font: small-caps 1.8rem/2.5rem 'Istok Web', 'PT Sans Caption', sans-serif;
+    color: #082B2B;
+    letter-spacing: 2px;
+}</code></pre>
+
+<p>Если подсветка не нужна, можно оформить блоки кода без подсветки, зато намного проще, при помощи селектора <code class="nohighlight">&lt;pre class=&quot;code&quot;&gt;</code>. Результат выглядит так:</p>
+
+<pre class="code">.code {
+    width:98%;
+    margin:.6rem auto;
+    font:.9rem/1.2rem 'PT Mono',monospace;
+    color:#18565e;
+    border:2px solid #ccc7c1;
+    padding:.2rem;
+    background:#f4f9f9 content-box;
+    overflow-x:auto
+}</pre>
+
+<p>В этом случае для уменьшения шаблона <code class="nohighlight">01_main.html</code> в его конце можно удалить этот кусок:</p>
+
+<pre><code>&lt;!--Highlight --&gt;
+            &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js&quot;&gt;&lt;/script&gt;
+            &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/color-brewer.min.css&quot;&gt;
+&lt;!-- END Highlight --&gt;</code></pre>
+
+<h4>Выделить</h4>
+<p>всякие отдельные слова/выражения, сущности и прочее, на что требуется акцентировать внимание, можно несколькими способами, помимо традиционных <b>bold</b>, <u>underline</u> etc.</p>
+<p>Важные <code class="nohighlight">сущности</code> или <code class="nohighlight">пути</code> можно выделить способом, <s>содранным</s> позаимствованным у <a href="http://css.yoksel.ru/">Юлии Бухваловой</a>, эксперта CSS и большого мастера всяких рюшечек :).</p>
+<p class="prim">Кстати, у нее же подсмотрен прием оформления с помощью прямой вставки <a href="https://ru.wikipedia.org/wiki/Эмодзи">emoji</a></p>
+<p>Оформляется селектором <code class="nohighlight">code</code> с классом <code class="nohighlight">nohighlight</code> (чтобы избежать конфликта с <code class="nohighlight">highlight.js</code>):</p>
+
+<pre><code>code.nohighlight {
+    /*от Бухваловой*/
+    display: inline-block;
+    background: #EDEDED none repeat scroll 0 0;
+    color: #774D7F;
+    font-family: 'PT Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1rem;
+    padding: 0 5px;
+    text-shadow: 2px 1px #fff;
+    border-style: solid;
+    border-color: #E3E9EA;
+    border-width: 1px;
+    border-radius: 3px;
+}</code></pre>
+
+<p>Кроме того, можно применить тег <kbd>kbd</kbd> для выделения моноширинным шрифтом и неким <span class="select">аналогом</span> полужирного шрифта при помощи <span class="select">&lt;span class=&quot;select&quot;&gt;</span>.</p>
+
+<h4>Цитаты</h4>
+					<p>Цитата оформляется тегами <code class="nohighlight">&lt;blockquote&gt;</code> (для сниппета KomodoEdit выделен шоткат <code class="nohighlight">Alt+Shift+B</code>)</p>
+					<blockquote>Это пример цитаты без разметки на параграфы.</blockquote>
+					<blockquote><p>Как выглядит многострочная цитата с параграфами:</p>
+                    <p>Задача организации, в особенности же дальнейшее развитие различных форм деятельности позволяет оценить значение позиций, занимаемых участниками в отношении поставленных задач. Товарищи! консультация с широким активом позволяет оценить значение форм развития.</p><p>— Бредогенератор</p></blockquote>
+	<!--================= ✂✂ =================-->
+				</section>
+				<section id="a6-1">
+	<!--================= ✂ =================-->	
+<h4>Блоки "Примечание" и "Внимание"</h4>
+<p>Для выделения блоков типа "Note" и "Warn" есть отдельные классы: <code class="nohighlight">prim</code> и <code class="nohighlight">warn</code>. Работа по доводке их оформления до ума продолжается.</p>
+<p class="prim">Так выглядит сейчас блок примечания</p>
+<p class="warn">А так &mdash; блок важного текста</p>
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a7">
+	<!--================= ✂ =================-->					
+
+					<h2>Нумерованные и маркированные списки</h2>
+					<h3>Маркированный список</h3>
+					<ul>
+                        <li>Подробно читать <a href="https://html5book.ru/html-lists/">здесь</a></li>
+                        <li>Это просто пункт</li>
+                        <li>Это просто пункт
+							<ul>
+								<li>Это просто вложенный пункт</li>
+								<li>Это просто вложенный пункт</li>
+							</ul></li>
+                        <li>Это просто пункт</li>
+                        <li>Это просто пункт</li>
+                        <li>Это просто пункт</li>
+                    </ul>
+					<p class="prim">Есть класс <code class="nohighlight">.nolist</code> &mdash; для подавления маркеров списка</p>
+					<h3>Нумерованный список<br>Стандартное оформление</h3>
+					<ol>
+                        <li><a href="https://html5book.ru/krasivoe-oformlenie-spiskov/">Примеры</a> красивого оформления списков</li>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка</li>
+                    </ol>
+					<h3>Нумерованный вложенный список</h3>
+					<p class="prim">Для подробностей см. <a href="http://htmlbook.ru/css/counter-reset">Мержевича</a></p>
+					<ol>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка со вложенным списком
+							<ol>
+                                <li>Подпункт нумерованного списка</li>
+                                <li>Подпункт нумерованного списка</li>
+                                <li>Подпункт нумерованного списка	</li>
+                            </ol>
+						</li>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка</li>
+                        <li>Пункт нумерованного списка</li>
+                    </ol>
+
+	<!--================= ✂✂ =================-->
+				</section>
+
+                <section id="a8">
+<!--================= ✂ =================-->					
+					<h2>Таблицы</h2>
+					<p>Если на странице есть таблицы, в <code class="nohighlight">&lt;head&gt;</code>...<code class="nohighlight">&lt;/head&gt;</code> нужно подключить еще один файл стилей:</p>
+					
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/tables.css&quot; media=&quot;all&quot;&gt;</code></pre>
+
+<p>Этот файл (с некоторыми переделками) взят из фреймворка <a href="https://purecss.io/">PureCSS</a>.</p>
+				</section>
+
+				<section id="a9">
+<!--================= ✂ =================-->				
+<h3>Структура таблицы</h3>
+<p>Таблицы должны быть построены "правильно" :), то есть иметь такую стуктуру:</p>
+<div class="bord">
+    <pre style='color:#000000;background:#ffffff;'><span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>table</span><span style='color:#074726; '> </span><span style='color:#000000; font-weight:bold; '>class</span><span style='color:#0000ff; '>=</span><span style='color:#000000; '>""</span><span style='color:#000080; '>></span>
+        <span style='color:#000080; '>&lt;</span><span style='color:#801AED; font-weight:bold; '>thead</span><span style='color:#000080; '>></span>
+            <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>
+                <span style='color:#000080; '>&lt;</span><span style='color:#5B5BEF; font-weight:bold; '>th</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#5B5BEF; font-weight:bold; '>th</span><span style='color:#000080; '>></span>
+                ............
+                <span style='color:#000080; '>&lt;</span><span style='color:#5B5BEF; font-weight:bold; '>th</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#5B5BEF; font-weight:bold; '>th</span><span style='color:#000080; '>></span>
+            <span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>
+        <span style='color:#000080; '>&lt;/</span><span style='color:#801AED; font-weight:bold; '>thead</span><span style='color:#000080; '>></span>
+        <span style='color:#000080; '>&lt;</span><span style='color:#0591C4; font-weight:bold; '>tbody</span><span style='color:#000080; '>></span>
+            <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>
+                <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>
+                ...........
+                <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>
+            <span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>
+            .................
+            <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>
+                <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>
+                ...........
+                <span style='color:#000080; '>&lt;</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>...<span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>td</span><span style='color:#000080; '>></span>
+            <span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>tr</span><span style='color:#000080; '>></span>		
+        <span style='color:#000080; '>&lt;/</span><span style='color:#0591C4; font-weight:bold; '>tbody</span><span style='color:#000080; '>></span>
+    <span style='color:#000080; '>&lt;/</span><span style='color:#0000ff; font-weight:bold; '>table</span><span style='color:#000080; '>></span>
+    </pre>
+    </div>
+<p>Проще всего формировать такую таблицу при помощи <a href="https://ru.wikipedia.org/wiki/Emmet">Emmet</a>, который, конечно же, подключен плагином к вашему рабочему редактору или IDE.</p>
+
+<p>Например, так:</p>
+
+<pre><code>table.main-table>(thead>tr>th*4)+tbody>tr*3>td*4</code></pre>
+	<!--================= ✂✂ =================-->
+				</section>
+
+				<section id="a10">
+<!--================= ✂ =================-->				
+					<h3>Виды таблиц</h3>
+					<h4>Стандартная</h4>
+					<table class="main-table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Фирма</th>
+            <th>Модель</th>
+            <th>Год</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Honda</td>
+            <td>Accord</td>
+            <td>2009</td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Toyota</td>
+            <td>Camry</td>
+            <td>2012</td>
+        </tr>
+
+        <tr>
+            <td>3</td>
+            <td>Hyundai</td>
+            <td>Elantra</td>
+            <td>2010</td>
+        </tr>
+    </tbody>
+</table>
+					<p>Формируется при помощи класса <code class="nohighlight">main-table</code>:</p>
+<pre><code>&lt;table class=&quot;main-table&quot;&gt;</code></pre>
+
+<h4>Разлинованная таблица</h4>
+<table class="main-table main-table-bordered"><thead><tr><th>#<th>Фирма<th>Модель<th>Год<tbody><tr><td>1<td>Honda<td>Accord<td>2009<tr><td>2<td>Toyota<td>Camry<td>2012<tr><td>3<td>Hyundai<td>Elantra<td>2010</table>
+
+<p>Создается применением двух классов, <code class="nohighlight">main-table</code> и <code class="nohighlight">main-table-bordered</code>:</p>
+
+<pre><code>&lt;table class=&quot;main-table main-table-bordered&quot;&gt;</code></pre>
+
+<h4>Горизонтально разлинованная</h4>
+
+<table class="main-table main-table-horizontal"><thead><tr><th>#<th>Фирма<th>Модель<th>Год<tbody><tr><td>1<td>Honda<td>Accord<td>2009<tr><td>2<td>Toyota<td>Camry<td>2012<tr><td>3<td>Hyundai<td>Elantra<td>2010</table>
+
+<p>Создается применением двух классов, <code class="nohighlight">main-table</code> и <code class="nohighlight">main-table-horizontal</code>:</p>
+
+<pre><code>&lt;table class=&quot;main-table main-table-horizontal&quot;&gt;</code></pre>
+
+<h4>"Зебра"</h4>
+
+<table class="main-table main-table-striped"><thead><tr><th>#<th>Фирма<th>Модель<th>Год<tbody><tr><td>1<td>Honda<td>Accord<td>2009<tr><td>2<td>Toyota<td>Camry<td>2012<tr><td>3<td>Hyundai<td>Elantra<td>2010<tr><td>4<td>Ford<td>Focus<td>2008<tr><td>5<td>Nissan<td>Sentra<td>2011<tr><td>6<td>BMW<td>M3<td>2009<tr><td>7<td>Honda<td>Civic<td>2010<tr><td>8<td>Kia<td>Soul<td>2010</table>
+
+<p>Создается применением двух классов, <code class="nohighlight">main-table</code> и <code class="nohighlight">main-table-striped</code>:</p>
+
+<pre><code>&lt;table class=&quot;main-table main-table-striped&quot;&gt;</code></pre>
+
+<p class="prim">Если кому-то (непонятно зачем) понадобится обеспечить совместимость таблицы-"зебры" с Ослами 8-й версии и ниже, пусть смотрит <a href="https://purecss.io/tables/">документацию PureCSS</a>, там есть об этом извращении.</p>
+<h4>Позиционирование</h4>
+<p>Если требуется выравнивание таблиц по центру, а не по левому краю, в шаблон <code class="nohighlight">01_main.html</code> в секции <code class="nohighlight">&lt;head&gt;&lt;style&gt;...&lt;/style&gt;&lt;/head&gt;</code> нужно просто добавить следующее:</p>
+<pre><code>.main-table {margin: 1rem auto;}</code></pre>
+<p>При этом будут центрированы все таблицы с классом <code class="nohighlight">main-table</code>. Отдельную таблицу при необходимости можно перепозиционировать, определив ей стиль "на месте":</p>
+<pre><code>&lt;table class=&quot;main-table main-table-striped&quot; style=&quot;margin: 1rem auto;&quot;&gt;</code></pre>
+	<!--================= ✂✂ =================-->
+				</section>
+
+				<section id="a11">
+<!--================= ✂ =================-->					
+					<h2>Вложенность в боковой панели "Содержание"</h2>
+					<p>Структура боковой панели очень проста. Если же, как это нередко бывает, в ее пунктах потребуется создать подпункты, то можно пойти двумя путями.</p>
+	<!--================= ✂✂ =================-->	
+				</section>
+
+				<section id="a12">
+<!--================= ✂ =================-->				
+					<h4>Стандартный, или "классический" способ</h4>
+					<p>состоит в том, чтобы нумеровать подпункты как потомки своих пунктов. Код при этом будет примерно такой:</p>
+					
+	<pre><code>&lt;aside&gt;
+                    &lt;header&gt;
+                        &lt;h1&gt;Содержание&lt;/h1&gt;
+                    &lt;/header&gt;
+                    &lt;ul&gt;
+            &lt;li&gt;&lt;a href=<b>&quot;#a1&quot;</b> target=&quot;_self&quot;&gt;section 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=<b>&quot;#a2&quot;</b> target=&quot;_self&quot;&gt;section 2&lt;/a&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href=<b>&quot;#a2-1&quot;</b> target=&quot;_self&quot;&gt;<span class="red">section 2-1</span>&lt;/a&gt;
+                    &lt;li&gt;&lt;a href=<b>&quot;#a2-2&quot;</b> target=&quot;_self&quot;&gt;<span class="red">section 2-2</span>&lt;/a&gt;
+                &lt;/ul&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=<b>&quot;#a3&quot;</b> target=&quot;_self&quot;&gt;section 3&lt;/a&gt;&lt;/li&gt;
+            .........................................................
+                    &lt;/ul&gt;
+        &lt;/aside&gt;</code></pre>
+	<p>На мой взгляд, с таким кодом неудобно работать, поэтому рекомендуется использовать</p>
+		<!--================= ✂✂ =================-->
+				</section>
+
+				<section id="a13">
+<!--================= ✂ =================-->					
+	<h4>"Сквозной" порядок нумерации</h4>
+	<p>При этом все пункты и подпункты нумеруются строго по порядку, примерно так:</p>
+	
+<pre><code>	&lt;aside&gt;
+                &lt;header&gt;
+                    &lt;h1&gt;Содержание&lt;/h1&gt;
+                &lt;/header&gt;
+                &lt;ul&gt;
+        &lt;li&gt;&lt;a href=<b>&quot;#a1&quot;</b> target=&quot;_self&quot;&gt;section 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=<b>&quot;#a2&quot;</b> target=&quot;_self&quot;&gt;section 2&lt;/a&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href=<b>&quot;#a3&quot;</b> target=&quot;_self&quot;&gt;<span class="red">section 2-1</span>&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=<b>&quot;#a4&quot;</b> target=&quot;_self&quot;&gt;<span class="red">section 2-2</span>&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=<b>&quot;#a5&quot;</b> target=&quot;_self&quot;&gt;section 5&lt;/a&gt;&lt;/li&gt;
+        ............................................................
+                &lt;/ul&gt;
+    &lt;/aside&gt;</code></pre>
+
+<p>Такой порядок, имхо, понятнее и проще, если содержание заранее ясно и меняться не будет. Если же возникает нужда вставить в уже существующую структуру, где-то в ее середке, дополнительный подпункт, то вполне подойдет и "классический" способ, иначе придется перенумеровывать все секции.</p>
+	<!--================= ✂✂ =================-->
+				</section>
+
+				<section id="a14">
+<!--================= ✂ =================-->						
+					<h2>Адаптивность</h2>
+					<p>Как показало беглое тестирование, шаблон неплохо масштабируется вплоть до размеров планшетов. Но верстку нельзя назвать по-настоящему адаптивной, поскольку она рассчитана на работу за компьютером или ноутбуком. Телефоны/смартфоны не предназначены для чтения документации и тем более для отработки веб-дизайна.</p>
+<!--================= ✂✂ =================-->
+				</section>
+				
+				<section id="a15">
+<!--================= ✂ =================-->
+<h4>Дисклеймер</h4>
+<p>Данный шаблон верстался "под себя", содержит практически всё, что мне требуется, а если вам нужно что-то еще (кнопочки там, веб-формы и т.п.), то вы уж сами.</p>
+
+<!--================= ✂✂ =================-->					
+				</section>
+
+
+            </article>
+        </main>
+
+        <footer>
+          	<p>Шаблон 01_main.html var.062020-1</p>
+            <p>Сделан на основе 01_semantic.html</p>
+        </footer>
+
+
+                        <!--<a href="#az" title="Наверх" id="scrollToTop"  target="_self"></a>-->
+						<div class="scrollUp" title="Наверх"></div>
+
+
+<!--Highlight -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.0/languages/xml.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/color-brewer.min.css">
+<!-- END Highlight -->
+
+<!--    jQuery лучше локальная  -->
+<script src="js/jquery-1.9.1.min.js"></script>
+<!--        From CDN           -->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script> -->
+
+	<script> /*Скрипт из плагина для появления копки Вверх*/
+			$(function(){
+				$('.scrollUp').liScrollToTop();
+			});
+	</script>
+
+ <!--Скрипт плавной прокрутки до якорей, см. https://smartlanding.biz/skript-plavnoj-prokrutki.html-->
+ <!--На jquery-3.4.n не работает!-->
+	<script>
+  $(document).ready(function(){
+    $("a[href*=#]").on("click", function(e){
+        var anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $(anchor.attr('href')).offset().top
+        }, 500);
+        e.preventDefault();
+        return false;
+    });
+});
+</script>
+
+<!--Скрипт выделения активного пункта меню см./mnt/brego/WEB/JS/jQuery/Разное/Прокрутка/Прокрутка_с_подсветкой/С_jsfiddle/Вар-->
+<script>
+	jQuery(window).scroll(function(){
+         var $sections = $('section');
+	$sections.each(function(i,el){
+        var top  = $(el).offset().top-100;
+        var bottom = top +$(el).height();
+        var scroll = $(window).scrollTop();
+        var id = $(el).attr('id');
+    	if( scroll > top && scroll < bottom){
+            $('a.active').removeClass('active');
+			$('a[href="#'+id+'"]').addClass('active');
+
+        }
+    })
+ });
+</script>
+
+<script> /*Скрипт из плагина для появления копки Вверх*/
+(function($){
+        $.fn.liScrollToTop = function(params){
+            return this.each(function(){
+                var scrollUp = $(this);
+                scrollUp.hide();
+                if ($(window).scrollTop() > document.documentElement.clientHeight) scrollUp.fadeIn("slow")
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() <= document.documentElement.clientHeight) scrollUp.fadeOut("slow")
+                    else scrollUp.fadeIn("slow")
+                });
+                scrollUp.click(function() {
+                    $("html, body").animate({scrollTop: 0}, "slow")
+                })
+            });
+        };
+    })(jQuery);</script>
+
+        </body>
+    </html>
